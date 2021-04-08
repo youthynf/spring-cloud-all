@@ -17,7 +17,7 @@ public class MainController2 {
     RestTemplate restTemplate;
 
     @GetMapping("/client5")
-    public void client5() {
+    public Object client5() {
         // ribbon 完成客户端的负载均衡 过滤掉down的机器
         ServiceInstance instances = lb.choose("provider");
 
@@ -28,5 +28,6 @@ public class MainController2 {
 
         String forObject = restTemplate.getForObject(url, String.class);
         System.out.println("resp_str:" + forObject);
+        return forObject;
     }
 }
