@@ -6,6 +6,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @RestController
 public class MainController {
     @Value("${server.port}")
@@ -30,5 +33,12 @@ public class MainController {
     @GetMapping("getHealthStatus")
     public String getHealth() {
         return healthStatusSrv.getStatus();
+    }
+
+    @GetMapping("/getMap")
+    public Map<String, String> getMap() {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("name", "500");
+        return map;
     }
 }
