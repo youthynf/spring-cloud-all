@@ -20,7 +20,9 @@ public class EurekaConsumerApplication {
 	// 开启负载均衡
 	@LoadBalanced
 	RestTemplate restTemplate() {
-		return new RestTemplate();
+		RestTemplate restTemplate = new RestTemplate();
+		restTemplate.getInterceptors().add(new LoggingClientHttpRequestInterceptor());
+		return restTemplate;
 	}
 
 	@Bean
