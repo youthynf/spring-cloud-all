@@ -2,9 +2,7 @@ package com.study.eureka_provider;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -40,5 +38,14 @@ public class MainController {
         HashMap<String, String> map = new HashMap<>();
         map.put("name", "500");
         return map;
+    }
+
+    @PostMapping("/postParam")
+    public Person postParam(@RequestBody String name) {
+        System.out.println("name:" + name);
+        Person person = new Person();
+        person.setId(100);
+        person.setName("xiaoming" + name);
+        return person;
     }
 }

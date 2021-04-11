@@ -6,9 +6,11 @@ import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -71,6 +73,16 @@ public class MainController2 {
 
         ResponseEntity<Map> entity = restTemplate.getForEntity(url, Map.class);
         System.out.println("respStr: "  + entity.getBody());
+        return entity;
+    }
+
+    @GetMapping("/postParam")
+    public ResponseEntity<Person> postParam(String name) {
+        ServiceInstance provider = lb.choose("provider");
+        String url = "http://" + provider.getServiceId() + ":" + provider.getPort() + "/postParam";
+        Map<String, String> map = Collections.singletonMap("name", name);
+        ResponseEntity<Person> entity = restTemplate.postForEntity(url, map, Person.class);
+        System.out.println(entity);
         return entity;
     }
 }
