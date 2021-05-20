@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -47,5 +49,16 @@ public class MainController {
         person.setId(100);
         person.setName("xiaoming" + name);
         return person;
+    }
+
+    @PostMapping("/postForLocation")
+    public URI postForLocation(@RequestBody Person person, HttpServletResponse response) throws Exception {
+        System.out.println(person.toString());
+        String url = "https://www.baidu.com/s?wd=" + person.getName();
+        System.out.println(url);
+        URI uri = new URI(url);
+        response.addHeader("Location", uri.toString());
+        System.out.println(response);
+        return uri;
     }
 }

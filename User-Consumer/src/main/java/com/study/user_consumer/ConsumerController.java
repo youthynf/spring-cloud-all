@@ -13,4 +13,9 @@ public class ConsumerController {
     public String alive() {
         return consumerSrv.isAlive();
     }
+
+    @GetMapping("/register")
+    public String register() {
+        return consumerSrv.register();
+    }
 }

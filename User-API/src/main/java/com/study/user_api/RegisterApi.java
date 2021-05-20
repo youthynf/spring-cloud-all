@@ -13,4 +13,7 @@ public interface RegisterApi {
 
     @GetMapping("/isAlive")
     public String isAlive();
+
+    @GetMapping("/register")
+    public String register();
 }

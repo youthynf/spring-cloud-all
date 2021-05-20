@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import java.net.URI;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -84,5 +85,15 @@ public class MainController2 {
         ResponseEntity<Person> entity = restTemplate.postForEntity(url, map, Person.class);
         System.out.println(entity);
         return entity;
+    }
+
+    @GetMapping("/postForLocation")
+    public URI postForLocation() {
+        ServiceInstance provider = lb.choose("provider");
+        String url = "http://" + provider.getServiceId() + ":" + provider.getPort() + "/postForLocation";
+        Map<String, String> map = Collections.singletonMap("name", "memeda");
+        URI location = restTemplate.postForLocation(url, map, Person.class);
+        System.out.println(location);
+        return location;
     }
 }

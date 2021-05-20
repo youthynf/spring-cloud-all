@@ -11,4 +11,9 @@ public class UserController implements RegisterApi {
         // TODO Auto-generated method stub
         return "ok";
     }
+
+    @Override
+    public String register() {
+        return "register";
+    }
 }
