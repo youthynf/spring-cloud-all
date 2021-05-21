@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import javax.servlet.http.HttpServletResponse;
+import java.net.MalformedURLException;
 import java.net.URI;
 import java.util.Collections;
 import java.util.List;
@@ -88,12 +90,13 @@ public class MainController2 {
     }
 
     @GetMapping("/postForLocation")
-    public URI postForLocation() {
+    public Object postForLocation(HttpServletResponse response) throws Exception {
         ServiceInstance provider = lb.choose("provider");
         String url = "http://" + provider.getServiceId() + ":" + provider.getPort() + "/postForLocation";
         Map<String, String> map = Collections.singletonMap("name", "memeda");
         URI location = restTemplate.postForLocation(url, map, Person.class);
         System.out.println(location);
-        return location;
+        response.sendRedirect(location.toURL().toString());
+        return null;
     }
 }
