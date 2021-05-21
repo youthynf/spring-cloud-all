@@ -1,9 +1,11 @@
 package com.study.user_consumer;
 
+import com.study.security.FeignAuthConfiguration;
 import com.study.user_api.RegisterApi;
 import org.springframework.cloud.openfeign.FeignClient;
 
-@FeignClient(name = "user-provider")
+// configuration = FeignAuthConfiguration.class用来配置安全认证
+@FeignClient(name = "user-provider", configuration = FeignAuthConfiguration.class)
 public interface UserConsumerService extends RegisterApi {
 
 }
