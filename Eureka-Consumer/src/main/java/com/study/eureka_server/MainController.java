@@ -46,7 +46,7 @@ public class MainController {
     }
 
     @GetMapping("/client3")
-    public void client3() {
+    public String client3() {
         // 具体的服务
 //        List<InstanceInfo> instances = client2.getInstancesById("localhost:provier:80");
         // 通过服务名取服务列表
@@ -54,21 +54,22 @@ public class MainController {
         for (InstanceInfo ins: instances) {
             System.out.println(ToStringBuilder.reflectionToString(ins));
         }
-
+        String forObject = null;
         if(instances.size() > 0) {
             InstanceInfo instanceInfo = instances.get(0);
             if(instanceInfo.getStatus() == InstanceInfo.InstanceStatus.UP) {
                 String url = "http://" + instanceInfo.getHostName() + ":" + instanceInfo.getPort() + "/getHi";
                 System.out.println("url: " + url);
                 RestTemplate restTemplate = new RestTemplate();
-                String forObject = restTemplate.getForObject(url, String.class);
+                forObject = restTemplate.getForObject(url, String.class);
                 System.out.println("resp_str:" + forObject);
             }
         }
+        return forObject;
     }
 
     @GetMapping("/client4")
-    public void client4() {
+    public String client4() {
         // ribbon 完成客户端的负载均衡 过滤掉down的机器
         ServiceInstance instances = lb.choose("provider");
 
@@ -78,5 +79,6 @@ public class MainController {
         RestTemplate restTemplate = new RestTemplate();
         String forObject = restTemplate.getForObject(url, String.class);
         System.out.println("resp_str:" + forObject);
+        return forObject;
     }
 }

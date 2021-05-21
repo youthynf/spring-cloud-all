@@ -3,6 +3,7 @@ package com.study.eureka_server;
 import com.netflix.loadbalancer.IRule;
 import com.netflix.loadbalancer.RandomRule;
 import com.netflix.loadbalancer.RetryRule;
+import com.netflix.loadbalancer.RoundRobinRule;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
@@ -27,8 +28,8 @@ public class EurekaConsumerApplication {
 
 	@Bean
 	public IRule myRule(){
-		//return new RoundRobinRule();
-		return new RandomRule();
+		return new RoundRobinRule();
+//		return new RandomRule();
 //		return new RetryRule();
 	}
 }
