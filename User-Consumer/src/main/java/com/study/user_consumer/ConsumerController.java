@@ -1,9 +1,11 @@
 package com.study.user_consumer;
 
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.Map;
 
@@ -61,5 +63,18 @@ public class ConsumerController {
 //		syso
         System.out.println(map);
         return consumerSrv.postMap(map);
+    }
+
+    @GetMapping("/hystrix")
+    @HystrixCommand(fallbackMethod = "back")
+    public String hystrix() {
+        // 自动处理URL
+        RestTemplate restTemplate = new RestTemplate();
+        String url ="http://user-provider/User/alive";
+        return restTemplate.getForObject(url, String.class);
+    }
+
+    public String back() {
+        return "请求失败~bbb...";
     }
 }
