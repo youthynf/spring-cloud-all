@@ -4,6 +4,7 @@ import com.netflix.appinfo.InstanceInfo;
 import com.netflix.discovery.EurekaClient;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
@@ -15,6 +16,9 @@ import java.util.List;
 
 @RestController
 public class MainController {
+
+    @Value("${server.port}")
+    String port;
 
     @Autowired
     DiscoveryClient client;
@@ -79,6 +83,6 @@ public class MainController {
         RestTemplate restTemplate = new RestTemplate();
         String forObject = restTemplate.getForObject(url, String.class);
         System.out.println("resp_str:" + forObject);
-        return forObject;
+        return "consumer-port:" + port + "==> provider-port:" + forObject;
     }
 }
