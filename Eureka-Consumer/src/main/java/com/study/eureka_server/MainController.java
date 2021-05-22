@@ -85,4 +85,12 @@ public class MainController {
         System.out.println("resp_str:" + forObject);
         return "consumer-port:" + port + "==> provider-port:" + forObject;
     }
+
+    @Value("${myconfig}")
+    String myConfig;
+
+    @GetMapping("/config")
+    public String getConfig() {
+        return myConfig;
+    }
 }
