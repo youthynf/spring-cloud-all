@@ -11,15 +11,15 @@ import java.util.Map;
  * @author 一明哥
  *
  */
-@RequestMapping("/User")
+//@RequestMapping("/User")
 public interface RegisterApi {
 
-    @GetMapping("/isAlive")
+    @GetMapping("/User/isAlive")
     public String isAlive();
 
-    @GetMapping("/register")
+    @GetMapping("/User/register")
     public String register();
 
-    @GetMapping("/findById")
+    @GetMapping("/User/findById")
     public Map findById(@RequestParam("id") Integer id);
 }
